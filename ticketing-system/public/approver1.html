@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zyllo - Review Requests</title>
+    <title>Zyllo - 1st Level Approver</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -19,24 +19,10 @@
         .navbar-brand img {
             height: 40px;
         }
-        .ticket {
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #ffffff;
-        }
-        .approved {
-            background-color: #d4edda;
-        }
-        .pending {
-            background-color: #fff3cd;
-        }
-        .cancelled {
-            background-color: #f8d7da;
-        }
-        .content {
-            background: rgba(255, 255, 255, 0.8);
+        .ticket-table {
+            width: 100%;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 8px;
         }
@@ -53,20 +39,37 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="index.html#features">Features</a>
+        <a class="nav-link" href="index.html">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="roles.html">Get Roles</a>
+        <a class="nav-link" href="index.html#overview">Overview</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="index.html#features">Features</a>
       </li>
     </ul>
   </div>
 </nav>
-<div class="container content">
-    <h1 class="text-center mb-4">Review Requests</h1>
-    <div id="ticketsContainer"></div>
-    <button onclick="window.location.href='index.html'" class="btn btn-info btn-block">Back to Main</button>
+<div class="container">
+    <h1 class="text-center mb-4">1st Level Approver - Pending Tickets</h1>
+    <div class="ticket-table table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Requester Name</th>
+                    <th>Project Field</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="ticketTableBody">
+                <!-- Tickets will be populated here -->
+            </tbody>
+        </table>
+    </div>
 </div>
-<script src="review.js"></script>
+<script src="approver1.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -4,7 +4,7 @@ const userForm = document.getElementById('userForm');
 const fileList = document.getElementById('fileList');
 let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
 let currentUserType = '';
-let editingTicketId = null;
+let editingTicketId = localStorage.getItem('editingTicketId');
 
 userForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -12,6 +12,11 @@ userForm.addEventListener('submit', function(event) {
     currentUserType = document.getElementById('userType').value;
     if (currentUserType === 'requester') {
         ticketForm.style.display = 'block';
+        if (editingTicketId) {
+            loadTicketData(editingTicketId);
+        }
+    } else if (currentUserType === 'approver1') {
+        window.location.href = 'approver1.html';
     } else {
         ticketForm.style.display = 'none';
     }
@@ -37,6 +42,7 @@ ticketForm.addEventListener('submit', function(event) {
             name: file.name
         }));
         editingTicketId = null;
+        localStorage.removeItem('editingTicketId');
     } else {
         // Create a new ticket
         const ticketNumber = generateUniqueTicketNumber();
@@ -70,10 +76,6 @@ function sendToFirstApprover(ticket) {
     console.log(`Ticket ${ticket.id} sent to first approver.`);
 }
 
-function sendToSecondApprover(ticket) {
-    console.log(`Ticket ${ticket.id} sent to second approver.`);
-}
-
 function renderTickets() {
     ticketsContainer.innerHTML = '';
     
@@ -92,64 +94,25 @@ function renderTickets() {
             <p><strong>Status:</strong> ${ticket.status}</p>
         `;
         
-        if (currentUserType.startsWith('approver') && ticket.status.startsWith('Pending') && 
-            ((currentUserType === 'approver1' && ticket.approverLevel === 1) ||
-             (currentUserType === 'approver2' && ticket.approverLevel === 2))) {
-            ticketElement.innerHTML += `
-                <button class="btn btn-success btn-sm" onclick="approveTicket('${ticket.id}')">Approve</button>
-                <button class="btn btn-danger btn-sm" onclick="cancelTicket('${ticket.id}')">Cancel</button>
-            `;
-        }
-
-        if (currentUserType === 'requester' && ticket.status === 'Pending Approval') {
-            ticketElement.innerHTML += `
-                <button class="btn btn-warning btn-sm" onclick="editTicket('${ticket.id}')">Edit</button>
-            `;
-        }
-        
         ticketsContainer.appendChild(ticketElement);
     });
 }
 
-function approveTicket(ticketId) {
+function loadTicketData(ticketId) {
     const ticket = tickets.find(t => t.id === ticketId);
-    
-    if (ticket.approverLevel === 1) {
-        ticket.approverLevel = 2;
-        ticket.status = 'Pending Second Level Approval';
-        sendToSecondApprover(ticket);
-    } else if (ticket.approverLevel === 2) {
-        ticket.status = 'Approved';
-    }
-    
-    localStorage.setItem('tickets', JSON.stringify(tickets));
-    renderTickets();
-}
-
-function cancelTicket(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
-    ticket.status = 'Cancelled';
-    localStorage.setItem('tickets', JSON.stringify(tickets));
-    renderTickets();
-}
-
-function editTicket(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
-    
-    document.getElementById('requesterName').value = ticket.requesterName;
-    document.getElementById('projectField').value = ticket.projectField;
-    document.getElementById('comment').value = ticket.comment;
-    const dataTransfer = new DataTransfer();
-    ticket.attachments.forEach(att => {
-        fetch(att.url).then(res => res.blob()).then(blob => {
-            const file = new File([blob], att.name, { type: blob.type });
-            dataTransfer.items.add(file);
+    if (ticket) {
+        document.getElementById('requesterName').value = ticket.requesterName;
+        document.getElementById('projectField').value = ticket.projectField;
+        document.getElementById('comment').value = ticket.comment;
+        const dataTransfer = new DataTransfer();
+        ticket.attachments.forEach(att => {
+            fetch(att.url).then(res => res.blob()).then(blob => {
+                const file = new File([blob], att.name, { type: blob.type });
+                dataTransfer.items.add(file);
+            });
         });
-    });
-    document.getElementById('attachment').files = dataTransfer.files;
-    
-    editingTicketId = ticketId;
-    ticketForm.scrollIntoView();
+        document.getElementById('attachment').files = dataTransfer.files;
+    }
 }
 
 document.getElementById('attachment').addEventListener('change', function() {
@@ -180,5 +143,9 @@ document.getElementById('reviewRequestsButton').addEventListener('click', functi
 });
 
 window.onload = function() {
+    if (editingTicketId) {
+        ticketForm.style.display = 'block';
+        loadTicketData(editingTicketId);
+    }
     renderTickets();
 };
