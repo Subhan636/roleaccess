@@ -25,11 +25,10 @@ function renderTicketDetails() {
 
 approveButton.addEventListener('click', function() {
     const ticket = tickets.find(t => t.id === viewingTicketId);
-    ticket.status = 'Pending Second Level Approval';
-    ticket.approverLevel = 2;
+    ticket.status = 'Approved';
     ticket.timestamp = new Date().getTime(); // Add timestamp
     localStorage.setItem('tickets', JSON.stringify(tickets));
-    window.location.href = 'approver1.html';
+    window.location.href = 'approver2.html';
 });
 
 cancelButton.addEventListener('click', function() {
@@ -37,7 +36,7 @@ cancelButton.addEventListener('click', function() {
     ticket.status = 'Cancelled';
     ticket.timestamp = new Date().getTime(); // Add timestamp
     localStorage.setItem('tickets', JSON.stringify(tickets));
-    window.location.href = 'approver1.html';
+    window.location.href = 'approver2.html';
 });
 
 window.onload = renderTicketDetails;

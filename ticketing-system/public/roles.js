@@ -17,6 +17,8 @@ userForm.addEventListener('submit', function(event) {
         }
     } else if (currentUserType === 'approver1') {
         window.location.href = 'approver1.html';
+    } else if (currentUserType === 'approver2') {
+        window.location.href = 'approver2.html';
     } else {
         ticketForm.style.display = 'none';
     }
@@ -142,10 +144,26 @@ document.getElementById('reviewRequestsButton').addEventListener('click', functi
     window.location.href = 'review.html';
 });
 
+function deleteExpiredTickets() {
+    const now = new Date().getTime();
+    const sixHours = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+    tickets = tickets.filter(ticket => {
+        if ((ticket.status === 'Approved' || ticket.status === 'Cancelled') && ticket.timestamp) {
+            return now - ticket.timestamp < sixHours;
+        }
+        return true;
+    });
+    localStorage.setItem('tickets', JSON.stringify(tickets));
+    renderTickets();
+}
+
 window.onload = function() {
     if (editingTicketId) {
         ticketForm.style.display = 'block';
         loadTicketData(editingTicketId);
     }
     renderTickets();
+    setInterval(deleteExpiredTickets, 60000); // Check for expired tickets every minute
 };
+
+
