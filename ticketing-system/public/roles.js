@@ -2,7 +2,7 @@ const ticketsContainer = document.getElementById('ticketsContainer');
 const ticketForm = document.getElementById('ticketForm');
 const userForm = document.getElementById('userForm');
 const fileList = document.getElementById('fileList');
-let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+let tickets = {};   
 let currentUserType = '';
 let editingTicketId = localStorage.getItem('editingTicketId');
 
@@ -25,7 +25,7 @@ userForm.addEventListener('submit', function(event) {
     renderTickets();
 });
 
-ticketForm.addEventListener('submit', function(event) {
+ticketForm.addEventListener('submit', async function(event) {
     event.preventDefault();
     
     const requesterName = document.getElementById('requesterName').value;
@@ -35,7 +35,7 @@ ticketForm.addEventListener('submit', function(event) {
     
     if (editingTicketId) {
         // Update the existing ticket
-        const ticket = tickets.find(t => t.id === editingTicketId);
+        const ticket = tickets.find(t => t._id === editingTicketId);
         ticket.requesterName = requesterName;
         ticket.projectField = projectField;
         ticket.comment = comment;
@@ -43,13 +43,14 @@ ticketForm.addEventListener('submit', function(event) {
             url: URL.createObjectURL(file),
             name: file.name
         }));
+        await updateTicketInMongoDb(editingTicketId, ticket);
         editingTicketId = null;
         localStorage.removeItem('editingTicketId');
     } else {
         // Create a new ticket
         const ticketNumber = generateUniqueTicketNumber();
         const ticket = {
-            id: ticketNumber,
+            _id: ticketNumber,
             requesterName: requesterName,
             projectField: projectField,
             comment: comment,
@@ -60,11 +61,10 @@ ticketForm.addEventListener('submit', function(event) {
             status: 'Pending Approval',
             approverLevel: 1
         };
-        tickets.push(ticket);
+        await addTicketToMongoDb(ticket);
         sendToFirstApprover(ticket);
     }
     
-    localStorage.setItem('tickets', JSON.stringify(tickets));
     renderTickets();
     ticketForm.reset();
     fileList.innerHTML = '';
@@ -75,7 +75,7 @@ function generateUniqueTicketNumber() {
 }
 
 function sendToFirstApprover(ticket) {
-    console.log(`Ticket ${ticket.id} sent to first approver.`);
+    console.log(`Ticket ${ticket._id} sent to first approver.`);
 }
 
 function renderTickets() {
@@ -85,7 +85,7 @@ function renderTickets() {
         const ticketElement = document.createElement('div');
         ticketElement.className = `ticket ${ticket.status === 'Approved' ? 'approved' : ticket.status === 'Cancelled' ? 'cancelled' : 'pending'}`;
         ticketElement.innerHTML = `
-            <p><strong>Ticket ID:</strong> ${ticket.id}</p>
+            <p><strong>Ticket ID:</strong> ${ticket._id}</p>
             <p><strong>Requester Name:</strong> ${ticket.requesterName}</p>
             <p><strong>Project Field:</strong> ${ticket.projectField}</p>
             <p><strong>Comment:</strong> ${ticket.comment}</p>
@@ -101,7 +101,7 @@ function renderTickets() {
 }
 
 function loadTicketData(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
+    const ticket = tickets.find(t => t._id === ticketId);
     if (ticket) {
         document.getElementById('requesterName').value = ticket.requesterName;
         document.getElementById('projectField').value = ticket.projectField;
@@ -157,7 +157,24 @@ function deleteExpiredTickets() {
     renderTickets();
 }
 
-window.onload = function() {
+function addTicketToMongoDb(ticket) {
+    console.log(ticket)
+    fetch('/api/tickets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ticket)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('Ticket added to MongoDB:', data);
+    });
+}   
+
+window.onload = async function() {
+    response = await fetch('/api/tickets')
+    tickets = await response.json();
     if (editingTicketId) {
         ticketForm.style.display = 'block';
         loadTicketData(editingTicketId);
@@ -166,4 +183,16 @@ window.onload = function() {
     setInterval(deleteExpiredTickets, 60000); // Check for expired tickets every minute
 };
 
+async function updateTicketInMongoDb(ticketId, ticket) {
+    await fetch(`/api/tickets/${ticketId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ticket)
+    }).then(res => res.json())
+        .then(data => {
+            console.log('Ticket added to MongoDB:', data);
+        });
+}
 

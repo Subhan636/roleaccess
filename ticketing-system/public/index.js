@@ -2,7 +2,7 @@ const ticketsContainer = document.getElementById('ticketsContainer');
 const ticketForm = document.getElementById('ticketForm');
 const userForm = document.getElementById('userForm');
 const fileList = document.getElementById('fileList');
-let tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+let tickets = [];
 let currentUserType = '';
 let editingTicketId = null;
 
@@ -28,7 +28,7 @@ ticketForm.addEventListener('submit', function(event) {
     
     if (editingTicketId) {
         // Update the existing ticket
-        const ticket = tickets.find(t => t.id === editingTicketId);
+        const ticket = tickets.find(t => t._id === editingTicketId);
         ticket.requesterName = requesterName;
         ticket.projectField = projectField;
         ticket.comment = comment;
@@ -67,11 +67,11 @@ function generateUniqueTicketNumber() {
 }
 
 function sendToFirstApprover(ticket) {
-    console.log(`Ticket ${ticket.id} sent to first approver.`);
+    console.log(`Ticket ${ticket._id} sent to first approver.`);
 }
 
 function sendToSecondApprover(ticket) {
-    console.log(`Ticket ${ticket.id} sent to second approver.`);
+    console.log(`Ticket ${ticket._id} sent to second approver.`);
 }
 
 function renderTickets() {
@@ -81,7 +81,7 @@ function renderTickets() {
         const ticketElement = document.createElement('div');
         ticketElement.className = `ticket ${ticket.status === 'Approved' ? 'approved' : ticket.status === 'Cancelled' ? 'cancelled' : 'pending'}`;
         ticketElement.innerHTML = `
-            <p><strong>Ticket ID:</strong> ${ticket.id}</p>
+            <p><strong>Ticket ID:</strong> ${ticket._id}</p>
             <p><strong>Requester Name:</strong> ${ticket.requesterName}</p>
             <p><strong>Project Field:</strong> ${ticket.projectField}</p>
             <p><strong>Comment:</strong> ${ticket.comment}</p>
@@ -96,14 +96,14 @@ function renderTickets() {
             ((currentUserType === 'approver1' && ticket.approverLevel === 1) ||
              (currentUserType === 'approver2' && ticket.approverLevel === 2))) {
             ticketElement.innerHTML += `
-                <button class="btn btn-success btn-sm" onclick="approveTicket('${ticket.id}')">Approve</button>
-                <button class="btn btn-danger btn-sm" onclick="cancelTicket('${ticket.id}')">Cancel</button>
+                <button class="btn btn-success btn-sm" onclick="approveTicket('${ticket._id}')">Approve</button>
+                <button class="btn btn-danger btn-sm" onclick="cancelTicket('${ticket._id}')">Cancel</button>
             `;
         }
 
         if (currentUserType === 'requester' && ticket.status === 'Pending Approval') {
             ticketElement.innerHTML += `
-                <button class="btn btn-warning btn-sm" onclick="editTicket('${ticket.id}')">Edit</button>
+                <button class="btn btn-warning btn-sm" onclick="editTicket('${ticket._id}')">Edit</button>
             `;
         }
         
@@ -112,7 +112,7 @@ function renderTickets() {
 }
 
 function approveTicket(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
+    const ticket = tickets.find(t => t._id === ticketId);
     
     if (ticket.approverLevel === 1) {
         ticket.approverLevel = 2;
@@ -127,14 +127,14 @@ function approveTicket(ticketId) {
 }
 
 function cancelTicket(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
+    const ticket = tickets.find(t => t._id === ticketId);
     ticket.status = 'Cancelled';
     localStorage.setItem('tickets', JSON.stringify(tickets));
     renderTickets();
 }
 
 function editTicket(ticketId) {
-    const ticket = tickets.find(t => t.id === ticketId);
+    const ticket = tickets.find(t => t._id === ticketId);
     
     document.getElementById('requesterName').value = ticket.requesterName;
     document.getElementById('projectField').value = ticket.projectField;
@@ -179,7 +179,9 @@ document.getElementById('reviewRequestsButton').addEventListener('click', functi
     window.location.href = 'review.html';
 });
 
-window.onload = function() {
+window.onload = async function() {
+    let response = await fetch('/api/tickets');
+    tickets = await response.json();
     renderTickets();
 };
 
