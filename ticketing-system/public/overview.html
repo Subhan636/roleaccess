@@ -1,56 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zyllo - Overview</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <style>
-        body {
-            background-image: url('website-background-templates.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
-        .container {
-            margin-top: 50px;
-            color: #333;
-        }
-        .navbar-brand img {
-            height: 40px;
-        }
-        .content {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-        }
+      body {
+        background-image: url("website-background-templates.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .navbar {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background: transparent !important;
+      }
+      .navbar-nav .nav-link {
+        color: white !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      }
+      .display-4 {
+        font-size: 2.7rem;
+        font-weight: bold;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+      }
+      .lead {
+        font-size: 1.3rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+        margin-bottom: 20px;
+      }
+      .about {
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+      }
+      .btn-primary {
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        background: linear-gradient(90deg, #007bff, #00c6ff);
+        border: none;
+        border-radius: 30px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      }
+      footer {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        text-align: center;
+        color: white;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
     </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.html">
-    <img src="Logo-.png" alt="Zyllo Logo"> Zyllo
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="index.html#features">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="roles.html">Get Roles</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-<div class="container content">
-  <h1 class="text-center mb-4">Overview</h1>
-  <p>Zyllo is designed to streamline the role request process within your organization. Whether you are a newly hired employee needing access to certain resources or an approver ensuring the right permissions are granted, Zyllo makes the process smooth and efficient. Our platform allows requesters to easily submit role requests and track their status, while approvers can quickly review and approve requests, ensuring that the right people have access to the right resources at the right time.</p>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="index.html">
+        <img src="Logo-.png" alt="Zyllo Logo" style="height: 40px" />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="overview.html">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="feature.html">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="roles.html">Roles</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container text-center">
+      <h1 class="display-4 mt-5">Zyllo Overview</h1>
+      <p class="lead">
+        Zyllo is designed to streamline the role request process within your
+        organization. Whether you are a newly hired employee needing access to
+        certain resources or an approver ensuring the right permissions are
+        granted, Zyllo makes the process smooth and efficient. Our platform
+        allows requesters to easily submit role requests and track their status,
+        while approvers can quickly review and approve requests, ensuring that
+        the right people have access to the right resources at the right time.
+      </p>
+    </div>
+    <footer>&copy; 2024 Zyllo Helpdesk. All rights reserved.</footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.jsdelivr.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>

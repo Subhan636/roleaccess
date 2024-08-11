@@ -10,7 +10,7 @@
     />
     <style>
       body {
-        background-image: url("website-background-templates.jpg");
+        background: linear-gradient(to right, #e0c3fc, #8ec5fc);
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -18,9 +18,19 @@
       .container {
         margin-top: 50px;
         color: #333;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
       }
       .navbar-brand img {
         height: 40px;
+      }
+      .navbar-nav .nav-link {
+        color: white !important;
       }
       .ticket-details {
         background: rgba(255, 255, 255, 0.9);
@@ -30,7 +40,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg">
       <a class="navbar-brand" href="index.html">
         <img src="Logo-.png" alt="Zyllo Logo" />
       </a>
@@ -51,10 +61,13 @@
             <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html#overview">Overview</a>
+            <a class="nav-link" href="overview.html">Overview</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html#features">Features</a>
+            <a class="nav-link" href="feature.html">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="roles.html">Roles</a>
           </li>
         </ul>
       </div>
@@ -68,11 +81,8 @@
       </div>
     </div>
     <script src="ticket-details.js"></script>
-    <script
-      src="lib/mongodb-service.js"
-      <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    ></script>
+    <script src="lib/mongodb-service.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>

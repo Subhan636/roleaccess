@@ -10,17 +10,37 @@
     />
     <style>
       body {
-        background-image: url("website-background-templates.jpg");
+        background: linear-gradient(to right, #e0c3fc, #8ec5fc);
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
       }
       .container {
+        max-width: 600px;
         margin-top: 50px;
+        margin-bottom: 50px;
         color: #333;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
       }
       .navbar-brand img {
         height: 40px;
+      }
+      .navbar-nav .nav-link {
+        color: white !important;
+      }
+      .navbar-nav {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+      }
+      .navbar-nav .nav-item {
+        margin-left: 20px;
       }
       .file-list-item {
         display: flex;
@@ -53,17 +73,26 @@
       .ticket.cancelled {
         border-color: #dc3545;
       }
-      .content {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 20px;
-        border-radius: 8px;
+      .btn-primary,
+      .btn-info,
+      .btn-success {
+        background: linear-gradient(90deg, #007bff, #00c6ff);
+        border: none;
+        border-radius: 30px;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .btn-primary:hover,
+      .btn-info:hover,
+      .btn-success:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index.html">
-        <img src="Logo-.png" alt="Zyllo Logo" />
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="#">
+        <img src="Logo-.png" alt="Zyllo Logo" style="height: 40px" />
       </a>
       <button
         class="navbar-toggler"
@@ -82,10 +111,13 @@
             <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html#overview">Overview</a>
+            <a class="nav-link" href="overview.html">Overview</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html#features">Features</a>
+            <a class="nav-link" href="feature.html">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="review.html">Review Requests</a>
           </li>
         </ul>
       </div>
