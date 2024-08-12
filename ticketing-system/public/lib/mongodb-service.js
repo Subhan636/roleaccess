@@ -11,3 +11,5 @@ async function updateTicketInMongoDb(ticketId, ticket) {
       console.log("Ticket added to MongoDB:", data);
     });
 }
+
+module.exports = updateTicketInMongoDb;
