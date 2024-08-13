@@ -1,36 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- The head section contains metadata, links to stylesheets, and other settings -->
   <head>
-    <!-- Specifies the character encoding for the HTML document -->
     <meta charset="UTF-8" />
-    
-    <!-- Sets the viewport to ensure the page scales well on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Title of the web page as shown in the browser tab -->
     <title>Zyllo - 2nd Level Approver</title>
-    
-    <!-- Links to Bootstrap's CSS for responsive design and predefined styles -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    
-    <!-- Internal CSS styles to customize the appearance of the page -->
     <style>
-      /* Set the background with a gradient, fixed position, and no-repeat */
       body {
         background: linear-gradient(to right, #e0c3fc, #8ec5fc);
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
       }
-      
-      /* Styling for the main container */
       .container {
         margin-top: 50px;
-        color: #442626;
+        color: #333;
         background: rgba(255, 255, 255, 0.8);
         padding: 20px;
         border-radius: 15px;
@@ -39,38 +26,26 @@
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.18);
       }
-      
-      /* Styling for the logo inside the navbar */
       .navbar-brand img {
-        height: 50px;
+        height: 40px;
       }
-      
-      /* Ensures the nav links in the navbar are white */
       .navbar-nav .nav-link {
         color: white !important;
       }
-      
-      /* Styling for the table displaying tickets */
       .ticket-table {
         width: 100%;
         margin-top: 20px;
-        background: rgba(149, 130, 130, 0.9);
+        background: rgba(255, 255, 255, 0.9);
         padding: 20px;
         border-radius: 8px;
       }
     </style>
   </head>
-  
-  <!-- The body section contains the visible content of the web page -->
   <body>
-    <!-- Navigation bar with a collapsible menu for mobile view -->
     <nav class="navbar navbar-expand-lg">
-      <!-- Brand logo linked to the homepage -->
       <a class="navbar-brand" href="index.html">
         <img src="Logo-.png" alt="Zyllo Logo" />
       </a>
-      
-      <!-- Toggler button for collapsing the navbar in smaller screens -->
       <button
         class="navbar-toggler"
         type="button"
@@ -82,8 +57,6 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      
-      <!-- Collapsible part of the navbar containing navigation links -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
@@ -101,15 +74,9 @@
         </ul>
       </div>
     </nav>
-    
-    <!-- Main container for displaying the pending tickets table -->
     <div class="container">
-      <!-- Header for the section -->
       <h1 class="text-center mb-4">2nd Level Approver - Pending Tickets</h1>
-      
-      <!-- Responsive table container -->
       <div class="ticket-table table-responsive">
-        <!-- Table structure for displaying ticket details -->
         <table class="table table-bordered table-striped">
           <thead class="thead-dark">
             <tr>
@@ -120,17 +87,11 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody id="ticketTableBody">
-            <!-- Tickets will be populated here dynamically using JavaScript -->
-          </tbody>
+          <tbody id="ticketTableBody"></tbody>
         </table>
       </div>
     </div>
-    
-    <!-- Link to external JavaScript file for handling table functionality -->
     <script src="approver2.js"></script>
-    
-    <!-- External scripts for jQuery, Popper.js, and Bootstrap's JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
